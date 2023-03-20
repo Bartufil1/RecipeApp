@@ -10,8 +10,14 @@ import {
 import { BlurView } from "@react-native-community/blur";
 
 import { SIZES, COLORS, FONTS } from "../screens/constants";
+import {useEffect } from "react";
+
 
 const RecipeCardDetails = ({ recipeItem }) => {
+
+  useEffect(()=>{
+    console.log(recipeItem)
+  })
   return (
     <View
       style={{
@@ -28,30 +34,31 @@ const RecipeCardDetails = ({ recipeItem }) => {
         <Text
           style={{
             width: "70%",
-            color: COLORS.white,
+            color: "white",
             ...FONTS.h3,
             fontSize: 18,
           }}
         >
-          {recipeItem.name}
+          {recipeItem.title}
         </Text>
         <Image
+         source={{uri:recipeItem.image}}
           style={{
             width: 20,
             height: 20,
             marginRight: SIZES.base,
-            tintColor: COLORS.darkGreen,
+            tintColor: "green",
           }}
         />
       </View>
 
       <Text
         style={{
-          color: COLORS.lightGray,
+          color: "gray",
           ...FONTS.body4,
         }}
       >
-        {recipeItem.duration} | {recipeItem.serving} Serving
+        {recipeItem.readyInMinutes} | {recipeItem.servings} Serving
       </Text>
     </View>
   );
@@ -74,7 +81,7 @@ const RecipeCardInfo = ({ recipeItem }) => {
       <View
         style={{
           ...styles.recipeCardContainer,
-          backgroundColor: COLORS.transparentDarkGray,
+          backgroundColor:"gray",
         }}
       >
         <RecipeCardDetails recipeItem={recipeItem} />
@@ -97,7 +104,7 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
       onPress={onPress}
     >
       <Image
-        source={recipeItem.image}
+        source={{uri:recipeItem.image}}
         resizeMode="cover"
         style={{
           width: 250,
@@ -112,17 +119,17 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
           left: 15,
           paddingHorizontal: SIZES.radius,
           paddingVertical: 5,
-          backgroundColor: COLORS.transparentGray,
+          backgroundColor: "gray",
           borderRadius: SIZES.radius,
         }}
       >
         <Text
           style={{
-            color: COLORS.white,
+            color:"white",
             ...FONTS.h4,
           }}
         >
-          {recipeItem.category}
+          {recipeItem.dishTypes[0]}
         </Text>
       </View>
 
