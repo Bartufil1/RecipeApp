@@ -18,7 +18,7 @@ const CategoryCard = ({ containerStyle, categoryItem, onPress }) => {
       onPress={onPress}
     >
       <Image
-        source={categoryItem.image}
+        source={{uri:categoryItem.image}}
         resizeMode="cover"
         style={{
           width: 100,
