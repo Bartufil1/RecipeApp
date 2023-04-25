@@ -9,12 +9,15 @@ import {
 } from "react-native";
 import { BlurView } from "@react-native-community/blur";
 import { SIZES, COLORS, FONTS } from "../screens/constants";
+
 import { useEffect } from "react";
 
 const RecipeCardDetails = ({ recipeItem }) => {
   useEffect(() => {
     console.log(recipeItem);
   });
+
+
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -24,10 +27,14 @@ const RecipeCardDetails = ({ recipeItem }) => {
           justifyContent: "space-between",
         }}
       >
+
         <Text style={styles.recipeCardTitle}>{recipeItem.title}</Text>
       </View>
       <Text style={styles.recipeCardInfo}>
         {recipeItem.readyInMinutes} minutes| {recipeItem.servings} Serving
+
+        {recipeItem.readyInMinutes} | {recipeItem.servings} Serving
+
       </Text>
     </View>
   );
@@ -47,7 +54,9 @@ const RecipeCardInfo = ({ recipeItem }) => {
     );
   } else {
     return (
+
       <View style={{ ...styles.recipeCardContainer, backgroundColor: "black" }}>
+
         <RecipeCardDetails recipeItem={recipeItem} />
       </View>
     );
@@ -65,6 +74,7 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
     >
       <Image
         source={{ uri: recipeItem.image }}
+
         resizeMode="cover"
         style={{
           width: 250,
@@ -74,6 +84,8 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
       />
       <View style={styles.dishTypeContainer}>
         <Text style={styles.dishTypeTitle}>{recipeItem.dishTypes[0]}</Text>
+
+     
       </View>
       <RecipeCardInfo recipeItem={recipeItem} />
     </TouchableOpacity>

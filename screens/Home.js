@@ -2,11 +2,14 @@ import React from "react";
 import {StyleSheet,Text, View, SafeAreaView, FlatList,TouchableOpacity,Image,TextInput} from "react-native";
 import { CategoryCard, TrendingCard } from "../components"
 import { useNavigation } from "@react-navigation/native";
+
 import { SIZES,FONTS,COLORS } from "../screens/constants";
 import axios from "axios";
 import { useState,useEffect } from "react";
 import Autocomplete from 'react-autocomplete'
 import { ImageBackground } from 'react-native';
+
+
 
 const Home = () =>{
 
@@ -78,6 +81,7 @@ const Home = () =>{
               fontSize: 10,
             }}
           >
+
             Tu będzie wyszukiwarka
           </Text>
   )
