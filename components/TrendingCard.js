@@ -8,16 +8,15 @@ import {
   Platform,
 } from "react-native";
 import { BlurView } from "@react-native-community/blur";
-
 import { SIZES, COLORS, FONTS } from "../screens/constants";
+import { useEffect } from "react";
 
 const RecipeCardDetails = ({ recipeItem }) => {
+  useEffect(() => {
+    console.log(recipeItem);
+  });
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flex: 1,
@@ -25,33 +24,10 @@ const RecipeCardDetails = ({ recipeItem }) => {
           justifyContent: "space-between",
         }}
       >
-        <Text
-          style={{
-            width: "70%",
-            color: COLORS.white,
-            ...FONTS.h3,
-            fontSize: 18,
-          }}
-        >
-          {recipeItem.name}
-        </Text>
-        <Image
-          style={{
-            width: 20,
-            height: 20,
-            marginRight: SIZES.base,
-            tintColor: COLORS.darkGreen,
-          }}
-        />
+        <Text style={styles.recipeCardTitle}>{recipeItem.title}</Text>
       </View>
-
-      <Text
-        style={{
-          color: COLORS.lightGray,
-          ...FONTS.body4,
-        }}
-      >
-        {recipeItem.duration} | {recipeItem.serving} Serving
+      <Text style={styles.recipeCardInfo}>
+        {recipeItem.readyInMinutes} minutes| {recipeItem.servings} Serving
       </Text>
     </View>
   );
@@ -71,12 +47,7 @@ const RecipeCardInfo = ({ recipeItem }) => {
     );
   } else {
     return (
-      <View
-        style={{
-          ...styles.recipeCardContainer,
-          backgroundColor: COLORS.transparentDarkGray,
-        }}
-      >
+      <View style={{ ...styles.recipeCardContainer, backgroundColor: "black" }}>
         <RecipeCardDetails recipeItem={recipeItem} />
       </View>
     );
@@ -87,17 +58,13 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
   return (
     <TouchableOpacity
       style={{
-        height: 350,
-        width: 250,
-        marginTop: SIZES.radius,
-        marginRight: 20,
-        borderRadius: SIZES.radius,
+        ...styles.trendingCardContainer,
         ...containerStyle,
       }}
       onPress={onPress}
     >
       <Image
-        source={recipeItem.image}
+        source={{ uri: recipeItem.image }}
         resizeMode="cover"
         style={{
           width: 250,
@@ -105,27 +72,9 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
           borderRadius: SIZES.radius,
         }}
       />
-      <View
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 15,
-          paddingHorizontal: SIZES.radius,
-          paddingVertical: 5,
-          backgroundColor: COLORS.transparentGray,
-          borderRadius: SIZES.radius,
-        }}
-      >
-        <Text
-          style={{
-            color: COLORS.white,
-            ...FONTS.h4,
-          }}
-        >
-          {recipeItem.category}
-        </Text>
+      <View style={styles.dishTypeContainer}>
+        <Text style={styles.dishTypeTitle}>{recipeItem.dishTypes[0]}</Text>
       </View>
-
       <RecipeCardInfo recipeItem={recipeItem} />
     </TouchableOpacity>
   );
@@ -143,5 +92,34 @@ const styles = StyleSheet.create({
     paddingVertical: SIZES.radius,
     paddingHorizontal: SIZES.base,
     borderRadius: SIZES.radius,
+  },
+  recipeCardTitle: {
+    color: "white",
+    ...FONTS.h3,
+    fontSize: 15,
+  },
+  recipeCardInfo: {
+    color: "gray",
+    ...FONTS.body4,
+  },
+  trendingCardContainer: {
+    height: 350,
+    width: 250,
+    marginTop: SIZES.radius,
+    marginRight: 20,
+    borderRadius: SIZES.radius,
+  },
+  dishTypeContainer: {
+    position: "absolute",
+    top: 20,
+    left: 15,
+    paddingHorizontal: SIZES.radius,
+    paddingVertical: 5,
+    backgroundColor: "black",
+    borderRadius: SIZES.radius,
+  },
+  dishTypeTitle: {
+    color: "white",
+    ...FONTS.h4,
   },
 });

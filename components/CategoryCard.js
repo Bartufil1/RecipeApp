@@ -1,56 +1,70 @@
 import React from "react";
-import { TouchableOpacity, Image, Text, View } from "react-native";
+import { TouchableOpacity, Image, Text, View, StyleSheet } from "react-native";
 
 import { COLORS, FONTS, SIZES } from "../screens/constants";
 
 const CategoryCard = ({ containerStyle, categoryItem, onPress }) => {
   return (
     <TouchableOpacity
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
-        marginTop: 10,
-        borderRadius: SIZES.radius,
-        backgroundColor: COLORS.gray2,
-        ...containerStyle,
-      }}
+      style={[styles.container, containerStyle]}
       onPress={onPress}
     >
       <Image
-        source={categoryItem.image}
+        source={{uri:categoryItem.image}}
         resizeMode="cover"
-        style={{
-          width: 100,
-          height: 100,
-          borderRadius: SIZES.radius,
-        }}
+        style={styles.image}
       />
-      <View
-        style={{
-          width: "65%",
-          paddingHorizontal: 20,
-        }}
-      >
-        <Text
-          style={{
-            flex: 1,
-            ...FONTS.h2,
-          }}
-        >
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>
           {categoryItem.name}
         </Text>
-        <Text
-          style={{
-            color: COLORS.gray,
-            ...FONTS.body4,
-          }}
-        >
-          {categoryItem.duration} | {categoryItem.serving} Serving
+        <Image
+        source={{uri:"https://cdn-icons-png.flaticon.com/512/5126/5126846.png"}}
+      />
+        <Text style={styles.subtitle}>
+          {categoryItem.title}
+        </Text>
+        <Text style={styles.mintitle}>
+          {categoryItem.readyInMinutes} minutes | {categoryItem.servings} Serving
         </Text>
       </View>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    marginTop: 10,
+    borderRadius: SIZES.radius,
+    backgroundColor: "#1C1C1E",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: SIZES.radius,
+  },
+  textContainer: {
+    width: "65%",
+    paddingHorizontal: 20,
+  },
+  title: {
+    flex: 1,
+    ...FONTS.h2,
+  },
+  subtitle: {
+    fontSize: 20,
+    textAlign: 'center', // wyśrodkowanie tekstu
+    textTransform: 'uppercase', // zmiana na duże litery
+    color: COLORS.white,
+    ...FONTS.body4,
+  },
+  mintitle:{
+    color: COLORS.gray,
+    ...FONTS.body4,
+  }
+});
 
 export default CategoryCard;
