@@ -8,22 +8,18 @@ import {
   Platform,
 } from "react-native";
 import { BlurView } from "@react-native-community/blur";
-
 import { SIZES, COLORS, FONTS } from "../screens/constants";
-import {useEffect } from "react";
 
+import { useEffect } from "react";
 
 const RecipeCardDetails = ({ recipeItem }) => {
+  useEffect(() => {
+    console.log(recipeItem);
+  });
 
-  useEffect(()=>{
-    console.log(recipeItem)
-  })
+
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flex: 1,
@@ -31,34 +27,14 @@ const RecipeCardDetails = ({ recipeItem }) => {
           justifyContent: "space-between",
         }}
       >
-        <Text
-          style={{
-            width: "70%",
-            color: "white",
-            ...FONTS.h3,
-            fontSize: 18,
-          }}
-        >
-          {recipeItem.title}
-        </Text>
-        <Image
-         source={{uri:recipeItem.image}}
-          style={{
-            width: 20,
-            height: 20,
-            marginRight: SIZES.base,
-            tintColor: "green",
-          }}
-        />
-      </View>
 
-      <Text
-        style={{
-          color: "gray",
-          ...FONTS.body4,
-        }}
-      >
+        <Text style={styles.recipeCardTitle}>{recipeItem.title}</Text>
+      </View>
+      <Text style={styles.recipeCardInfo}>
+        {recipeItem.readyInMinutes} minutes| {recipeItem.servings} Serving
+
         {recipeItem.readyInMinutes} | {recipeItem.servings} Serving
+
       </Text>
     </View>
   );
@@ -78,12 +54,9 @@ const RecipeCardInfo = ({ recipeItem }) => {
     );
   } else {
     return (
-      <View
-        style={{
-          ...styles.recipeCardContainer,
-          backgroundColor:"gray",
-        }}
-      >
+
+      <View style={{ ...styles.recipeCardContainer, backgroundColor: "black" }}>
+
         <RecipeCardDetails recipeItem={recipeItem} />
       </View>
     );
@@ -94,17 +67,14 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
   return (
     <TouchableOpacity
       style={{
-        height: 350,
-        width: 250,
-        marginTop: SIZES.radius,
-        marginRight: 20,
-        borderRadius: SIZES.radius,
+        ...styles.trendingCardContainer,
         ...containerStyle,
       }}
       onPress={onPress}
     >
       <Image
-        source={{uri:recipeItem.image}}
+        source={{ uri: recipeItem.image }}
+
         resizeMode="cover"
         style={{
           width: 250,
@@ -112,27 +82,11 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }) => {
           borderRadius: SIZES.radius,
         }}
       />
-      <View
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 15,
-          paddingHorizontal: SIZES.radius,
-          paddingVertical: 5,
-          backgroundColor: "gray",
-          borderRadius: SIZES.radius,
-        }}
-      >
-        <Text
-          style={{
-            color:"white",
-            ...FONTS.h4,
-          }}
-        >
-          {recipeItem.dishTypes[0]}
-        </Text>
-      </View>
+      <View style={styles.dishTypeContainer}>
+        <Text style={styles.dishTypeTitle}>{recipeItem.dishTypes[0]}</Text>
 
+     
+      </View>
       <RecipeCardInfo recipeItem={recipeItem} />
     </TouchableOpacity>
   );
@@ -150,5 +104,34 @@ const styles = StyleSheet.create({
     paddingVertical: SIZES.radius,
     paddingHorizontal: SIZES.base,
     borderRadius: SIZES.radius,
+  },
+  recipeCardTitle: {
+    color: "white",
+    ...FONTS.h3,
+    fontSize: 15,
+  },
+  recipeCardInfo: {
+    color: "gray",
+    ...FONTS.body4,
+  },
+  trendingCardContainer: {
+    height: 350,
+    width: 250,
+    marginTop: SIZES.radius,
+    marginRight: 20,
+    borderRadius: SIZES.radius,
+  },
+  dishTypeContainer: {
+    position: "absolute",
+    top: 20,
+    left: 15,
+    paddingHorizontal: SIZES.radius,
+    paddingVertical: 5,
+    backgroundColor: "black",
+    borderRadius: SIZES.radius,
+  },
+  dishTypeTitle: {
+    color: "white",
+    ...FONTS.h4,
   },
 });
