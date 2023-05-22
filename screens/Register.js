@@ -3,7 +3,8 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image } from 'reac
 import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import registerBackground from "./image/register.png"
-
+import { auth } from '../firebase';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const Register = () =>{
     const navigation = useNavigation()
      
@@ -30,7 +31,7 @@ const Register = () =>{
 
   const handleRegister = () => {
     // Handle registration logic here
-    console.log(`Username: ${username} Email: ${email} Password: ${password} Confirm Password: ${confirmPassword}`);
+    createUserWithEmailAndPassword(auth, email,password).then(user=>navigation.navigate("Home",{mail:user.user.email})).catch(e=>console.log(e))
   }
 
   return (
@@ -66,7 +67,7 @@ const Register = () =>{
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={()=>navigation.replace("Home")}
+          onPress={handleRegister}
         >
           <Text style={styles.buttonText}>Zarejestruj się</Text>
         </TouchableOpacity>

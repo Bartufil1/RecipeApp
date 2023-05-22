@@ -3,6 +3,8 @@ import {StatusBar, StyleSheet,Text, View, Image,TextInput,TouchableOpacity} from
 import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import backgroundImage from "./image/loginPicture.png"
+import { auth } from '../firebase';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () =>{
   const navigation = useNavigation()
@@ -21,13 +23,9 @@ const Login = () =>{
   
     const handleLogin = () => {
       // Handle login logic here
-      console.log(`Username: ${username} Password: ${password}`);
+      signInWithEmailAndPassword(auth, username,password).then(user=>navigation.navigate("Home",{mail:user.user.email})).catch(e=>console.log(e))
     }
-  
-    const handleRegister = () => {
-      // Handle registration logic here
-      console.log('Register button pressed');
-    }
+
   
     return (
       <View style={styles.container}>
@@ -49,7 +47,7 @@ const Login = () =>{
           />
           <TouchableOpacity
             style={styles.button}
-            onPress={()=>navigation.replace("Home")}
+            onPress={handleLogin}
           >
             <Text style={styles.buttonText}>Zaloguj się</Text>
           </TouchableOpacity>
