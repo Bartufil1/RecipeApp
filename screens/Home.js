@@ -6,17 +6,19 @@ import { useNavigation } from "@react-navigation/native";
 import { SIZES,FONTS,COLORS } from "../screens/constants";
 import axios from "axios";
 import { useState,useEffect } from "react";
-import Autocomplete from 'react-autocomplete'
+import AutocompleteInput from "react-native-autocomplete-input";
 import { ImageBackground } from 'react-native';
-
+import { useRoute } from '@react-navigation/native';
 
 
 const Home = () =>{
+const query = useState('');
+const route = useRoute();
 
   const [data,setData]= useState([]);
   const getData= ()=> {
     axios.get("https://api.spoonacular.com/recipes/random?number=10&apiKey=c0bc41e997cc4c38912e4671df4527ce").then((response)=>{setData(response.data)
-    console.log(response)
+    //console.log(response)
     })
   }
   useEffect(()=>{
@@ -28,14 +30,16 @@ const Home = () =>{
   const [data2,setData2]= useState([]);
   const getData2= ()=> {
     axios.get("https://api.spoonacular.com/recipes/random?number=5&apiKey=c0bc41e997cc4c38912e4671df4527ce").then((response)=>{setData2(response.data)
-    console.log(response)}
-    )
+   // console.log(response)}
+   } )
   }
   const [isReady,setReady]= useState(false);
 
   const getData3= (query)=> {
-    axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=c0bc41e997cc4c38912e4671df4527ce&query=${query}`).then((response)=>{setData3(response.data)
-    console.log(response)
+    console.log(query);
+    axios.get(`https://api.spoonacular.com/recipes/complexSearch?&apiKey=c0bc41e997cc4c38912e4671df4527ce&query=${query}`).then((response)=>{console.log(response.data.results)
+    setData3(response.data.results)
+    //console.log(response)
     })}
     const [data3,setData3]= useState([]);
 
@@ -53,26 +57,37 @@ const Home = () =>{
             />
           </TouchableOpacity>
           <View style={styles.headerTextContainer}>
-            <Text style={styles.headerGreetingText}>HI JUSTYNA !</Text>
+            <Text style={styles.headerGreetingText}>HI {route.params.mail} !</Text>
             <Text style={styles.headerQuestionText}>HOW COOK TODAY?</Text>
           </View>
         </View>
       );
     }
     
-    function renderSearchBar() {
-      return (
-        /*
-    <Autocomplete
+    
+function renderSearchBar() {
+  return (
+    <AutocompleteInput
       data={data3}
-      value= {""}
-      onChangeText={(text) =>getData3(text)}
+      value={query}
+      onChangeText={(text) => getData3(text)}
       flatListProps={{
-        keyExtractor: (_, idx) => idx,
-        renderItem: ({ item }) => <Text>{item.name}</Text>,
+        keyExtractor: (_, idx) => idx.toString(),
+        renderItem: ({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Recipe", { id: item.id });
+            }}
+            style={styles.autocompleteItem}
+          >
+            <Text style={styles.autocompleteItemText}>{item.title}</Text>
+          </TouchableOpacity>
+        )
       }}
+      inputContainerStyle={styles.inputContainer}
+      inputStyle={styles.inputText}
     />
-    */
+    /*
         <Text
             style={{
               marginTop: 5,
@@ -81,9 +96,9 @@ const Home = () =>{
               fontSize: 10,
             }}
           >
-
             Tu będzie wyszukiwarka
           </Text>
+          */
   )
 };
 function renderSeeRecipeCard() {
@@ -160,7 +175,7 @@ return (
             categoryItem={item}
             containerStyle={styles.categoryCardContainer}
             onPress={() =>
-              navigation.navigate("Recipe", { recipe: item })
+              navigation.navigate("Recipe", { id: item.id })
             }
           />
         );
@@ -264,5 +279,25 @@ const styles = StyleSheet.create({
   },
   footer: {
     marginBottom: 100,
+  },
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    backgroundColor: '#fff',
+  },
+  inputText: {
+    fontSize: 16,
+  },
+  autocompleteItem: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  autocompleteItemText: {
+    fontSize: 16,
   },
 });

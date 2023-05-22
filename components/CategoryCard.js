@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 20,
-    textAlign: 'center', // wyśrodkowanie tekstu
-    textTransform: 'uppercase', // zmiana na duże litery
+    textAlign: 'center', 
+    textTransform: 'uppercase',
     color: COLORS.white,
     ...FONTS.body4,
   },

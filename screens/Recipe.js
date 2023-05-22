@@ -124,7 +124,7 @@ let { id } = route.params;
 const [data,setData]= useState([]);
 const getData= ()=> {
   axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=c0bc41e997cc4c38912e4671df4527ce&includeNutrition=true`).then((response)=>{setData(response.data)
-  console.log(response.data)
+ // console.log(response.data)
   })
   
 }

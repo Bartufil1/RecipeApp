@@ -14,7 +14,7 @@ import { useEffect } from "react";
 
 const RecipeCardDetails = ({ recipeItem }) => {
   useEffect(() => {
-    console.log(recipeItem);
+    //console.log(recipeItem);
   });
 
 
@@ -32,8 +32,6 @@ const RecipeCardDetails = ({ recipeItem }) => {
       </View>
       <Text style={styles.recipeCardInfo}>
         {recipeItem.readyInMinutes} minutes| {recipeItem.servings} Serving
-
-        {recipeItem.readyInMinutes} | {recipeItem.servings} Serving
 
       </Text>
     </View>
